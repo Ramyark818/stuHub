@@ -150,9 +150,9 @@ export function DashboardNav() {
             ))}
           </>
         )}
-      </div>
+        
+        <Separator className="my-4" />
 
-      <div className="mt-auto space-y-2">
         <Link
           href="/dashboard/profile"
           className={cn("flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
