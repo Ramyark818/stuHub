@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Bot, FileUp, GraduationCap, LayoutDashboard, Settings, Shield, University, User, Users } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Bot, FileUp, LayoutDashboard, Settings, University, User, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -34,21 +34,32 @@ const adminNavItems = [
 
 export function DashboardNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [role, setRole] = useState<Role | null>(null);
 
   useEffect(() => {
-    setRole("student");
+    // Set initial role from localStorage or default to student
+    const savedRole = localStorage.getItem("userRole") as Role | null;
+    if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
+      setRole(savedRole);
+    } else {
+      setRole("student");
+    }
   }, []);
+  
+  const handleRoleChange = (newRole: Role) => {
+    setRole(newRole);
+    localStorage.setItem("userRole", newRole);
 
-  let navItems = studentNavItems;
-  let dashboardPath = "/dashboard/student";
-  if (role === "faculty") {
-    navItems = facultyNavItems;
-    dashboardPath = "/dashboard/faculty";
-  } else if (role === "admin") {
-    navItems = [...studentNavItems, ...facultyNavItems]; // For demo, let admin see all
-    dashboardPath = "/dashboard/admin";
-  }
+    // Navigate to the default dashboard for the new role
+    if (newRole === 'student') {
+        router.push('/dashboard/student');
+    } else if (newRole === 'faculty') {
+        router.push('/dashboard/faculty');
+    } else if (newRole === 'admin') {
+        router.push('/dashboard/admin');
+    }
+  };
 
   if (!role) {
     return null; // Or a loading skeleton
@@ -57,7 +68,7 @@ export function DashboardNav() {
   return (
     <nav className="flex flex-col h-full gap-4 p-4">
       <div className="px-2">
-        <Select value={role} onValueChange={(value) => setRole(value as Role)}>
+        <Select value={role} onValueChange={(value) => handleRoleChange(value as Role)}>
           <SelectTrigger>
             <SelectValue placeholder="Select a role" />
           </SelectTrigger>
@@ -108,7 +119,8 @@ export function DashboardNav() {
                 href={item.href}
                 className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-                pathname.startsWith(item.href) && "bg-accent text-primary"
+                pathname.startsWith(item.href) && pathname !== '/dashboard/admin' ? "bg-accent text-primary" : pathname === item.href ? "bg-accent text-primary" : "",
+                item.href === '/dashboard/admin' && pathname === '/dashboard/admin' && "bg-accent text-primary"
                 )}
             >
                 <item.icon className="h-4 w-4" />
