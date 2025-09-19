@@ -23,21 +23,21 @@ type Role = "student" | "faculty" | "admin";
 const profileData = {
     student: {
         name: "Demo Student",
-        email: "student@unitrack.com",
+        email: "student@stuhub.com",
         phone: "+1 (555) 123-4567",
         role: "Student",
         avatarId: "student-avatar",
     },
     faculty: {
         name: "Dr. Demo Faculty",
-        email: "faculty@unitrack.com",
+        email: "faculty@stuhub.com",
         phone: "+1 (555) 987-6543",
         role: "Faculty",
         avatarId: "faculty-avatar",
     },
     admin: {
         name: "Admin User",
-        email: "admin@unitrack.com",
+        email: "admin@stuhub.com",
         phone: "+1 (555) 555-5555",
         role: "Admin",
         avatarId: "admin-avatar",
