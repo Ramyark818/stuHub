@@ -23,7 +23,6 @@ const studentNavItems = [
   { href: "/dashboard/portfolio", label: "Portfolio", icon: Contact },
   { href: "/dashboard/upload", label: "Upload Records", icon: FileUp },
   { href: "/dashboard/career-guide", label: "Career Guide", icon: Wand2 },
-  { href: "/dashboard/chat", label: "AI Assistant", icon: Bot },
 ];
 
 const facultyNavItems = [
@@ -148,7 +147,7 @@ export function DashboardNav() {
                 href={item.href}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-                  pathname === item.href && "bg-accent text-primary"
+                  (pathname === item.href || (item.href !== '/dashboard/admin' && pathname.startsWith(item.href))) && "bg-accent text-primary"
                 )}
             >
                 <item.icon className="h-4 w-4" />
