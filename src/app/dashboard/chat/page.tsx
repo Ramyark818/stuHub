@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { ChatUI } from "@/components/chat-ui";
-import { AI } from "@/app/action";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { AI } from '@/app/action';
 
 export default function ChatPage() {
   return (

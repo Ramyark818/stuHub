@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useActions } from 'ai/rsc/react';
-import { type AI } from '@/app/action';
+import { AI } from '@/app/action';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, UploadCloud, FileText, Star, TrendingDown } from "lucide-react";
+import type { TranscriptAssessmentOutput } from "@/ai/flows/transcript-assessment";
 
 const formSchema = z.object({
   transcript: z
@@ -24,17 +24,10 @@ const formSchema = z.object({
     ),
 });
 
-type TranscriptAssessmentOutput = {
-  summary: string;
-  completedCourses: string[];
-  gpa: number;
-  areasForImprovement: string;
-}
-
 export function UploadForm() {
   const [assessment, setAssessment] = useState<TranscriptAssessmentOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { assessTranscript } = useActions<typeof AI>();
+  const { assessTranscript } = AI.useActions();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
