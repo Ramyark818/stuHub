@@ -13,8 +13,8 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const CareerGuideInputSchema = z.object({
-  interests: z.string().describe('The student\'s interests.'),
-  skills: z.string().describe('The student\'s skills.'),
+  interests: z.array(z.string()).describe('The student\'s interests.'),
+  skills: z.array(z.string()).describe('The student\'s skills.'),
 });
 export type CareerGuideInput = z.infer<typeof CareerGuideInputSchema>;
 
@@ -50,8 +50,16 @@ const prompt = ai.definePrompt({
 
   Keep your tone encouraging, supportive, and professional.
 
-  Student's Interests: {{{interests}}}
-  Student's Skills: {{{skills}}}`,
+  Student's Interests:
+  {{#each interests}}
+  - {{{this}}}
+  {{/each}}
+
+  Student's Skills:
+  {{#each skills}}
+  - {{{this}}}
+  {{/each}}
+  `,
 });
 
 const careerGuideFlow = ai.defineFlow(

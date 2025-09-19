@@ -2,42 +2,58 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { guideCareer } from "@/ai/flows/career-guide";
 import type { CareerGuideOutput } from "@/ai/flows/career-guide";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Wand2, ArrowRight } from "lucide-react";
+import { Loader2, Wand2, ArrowRight, X, Plus } from "lucide-react";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-
-const formSchema = z.object({
-  interests: z.string().min(5, "Please describe your interests."),
-  skills: z.string().min(5, "Please describe your skills."),
-});
+import { getStudentData } from "@/lib/student-data";
+import { Badge } from "./ui/badge";
+import { Label } from "./ui/label";
 
 export function CareerGuideForm() {
+  const studentData = getStudentData();
   const [suggestions, setSuggestions] = useState<CareerGuideOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [interests, setInterests] = useState<string[]>(studentData.interests || []);
+  const [skills, setSkills] = useState<string[]>(studentData.skills || []);
+  const [newInterest, setNewInterest] = useState("");
+  const [newSkill, setNewSkill] = useState("");
+
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      interests: "",
-      skills: "",
-    },
-  });
+  const handleAddItem = (
+    list: string[], 
+    setter: React.Dispatch<React.SetStateAction<string[]>>, 
+    newItem: string,
+    newItemSetter: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    if (newItem && !list.includes(newItem)) {
+      setter([...list, newItem]);
+      newItemSetter("");
+    }
+  };
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  const handleRemoveItem = (setter: React.Dispatch<React.SetStateAction<string[]>>, itemToRemove: string) => {
+    setter(currentItems => currentItems.filter(item => item !== itemToRemove));
+  };
+
+
+  async function handleSubmit() {
+    if (skills.length === 0 || interests.length === 0) {
+        toast({
+            variant: "destructive",
+            title: "Missing Information",
+            description: "Please add at least one skill and one interest.",
+        });
+        return;
+    }
     setIsLoading(true);
     setSuggestions(null);
     try {
-      const result = await guideCareer(values);
+      const result = await guideCareer({ interests, skills });
       setSuggestions(result);
       toast({
         title: "Suggestions Ready",
@@ -59,39 +75,62 @@ export function CareerGuideForm() {
     <div className="grid gap-8 md:grid-cols-2">
       <Card>
         <CardHeader>
-            <CardTitle>Tell Us About Yourself</CardTitle>
-            <CardDescription>The more details you provide, the better the suggestions will be.</CardDescription>
+            <CardTitle>Your Skills & Interests</CardTitle>
+            <CardDescription>Your skills and interests from your profile are pre-filled. Add or remove them to tailor your results.</CardDescription>
         </CardHeader>
         <CardContent>
-            <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                control={form.control}
-                name="interests"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Your Interests</FormLabel>
-                    <FormControl>
-                        <Textarea placeholder="e.g., Artificial intelligence, creative writing, hiking, video games..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-                 <FormField
-                control={form.control}
-                name="skills"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Your Skills</FormLabel>
-                    <FormControl>
-                        <Textarea placeholder="e.g., Python, public speaking, project management, data analysis..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-                <Button type="submit" disabled={isLoading}>
+            <div className="space-y-6">
+                 <div className="space-y-3">
+                    <Label>Your Interests</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {interests.map(item => (
+                            <Badge key={item} variant="outline" className="flex items-center gap-1.5">
+                                {item}
+                                <button onClick={() => handleRemoveItem(setInterests, item)} className="hover:text-destructive">
+                                    <X className="h-3 w-3" />
+                                </button>
+                            </Badge>
+                        ))}
+                    </div>
+                    <div className="flex gap-2">
+                        <Input 
+                            value={newInterest}
+                            onChange={(e) => setNewInterest(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleAddItem(interests, setInterests, newInterest, setNewInterest)}
+                            placeholder="Add an interest..."
+                        />
+                        <Button variant="outline" size="icon" onClick={() => handleAddItem(interests, setInterests, newInterest, setNewInterest)}>
+                            <Plus className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </div>
+
+                <div className="space-y-3">
+                    <Label>Your Skills</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {skills.map(item => (
+                            <Badge key={item} variant="secondary" className="flex items-center gap-1.5">
+                                {item}
+                                <button onClick={() => handleRemoveItem(setSkills, item)} className="hover:text-destructive">
+                                    <X className="h-3 w-3" />
+                                </button>
+                            </Badge>
+                        ))}
+                    </div>
+                    <div className="flex gap-2">
+                        <Input 
+                            value={newSkill}
+                            onChange={(e) => setNewSkill(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleAddItem(skills, setSkills, newSkill, setNewSkill)}
+                            placeholder="Add a skill..."
+                        />
+                        <Button variant="outline" size="icon" onClick={() => handleAddItem(skills, setSkills, newSkill, setNewSkill)}>
+                            <Plus className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </div>
+
+                <Button onClick={handleSubmit} disabled={isLoading}>
                 {isLoading ? (
                     <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -101,8 +140,7 @@ export function CareerGuideForm() {
                     "Get Suggestions"
                 )}
                 </Button>
-            </form>
-            </Form>
+            </div>
         </CardContent>
       </Card>
       
@@ -141,7 +179,7 @@ export function CareerGuideForm() {
           ) : (
              !isLoading && <div className="flex flex-col items-center justify-center h-64 text-center">
               <Wand2 className="h-12 w-12 text-muted-foreground/50" />
-              <p className="text-muted-foreground mt-4">Fill out the form to get started.</p>
+              <p className="text-muted-foreground mt-4">Review your skills and interests to get started.</p>
             </div>
           )}
         </CardContent>
