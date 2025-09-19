@@ -18,13 +18,15 @@ export function ChatUI() {
     e.preventDefault();
     if (!input || isLoading) return;
 
+    const userMessage = {
+        id: Date.now(),
+        role: "user" as const,
+        display: input,
+      };
+
     setMessages((currentMessages: any) => [
       ...currentMessages,
-      {
-        id: Date.now(),
-        role: "user",
-        display: input,
-      },
+      userMessage
     ]);
     
     const formData = new FormData();
@@ -74,7 +76,7 @@ export function ChatUI() {
                     : "bg-card"
                 }`}
               >
-                 <div className="text-sm whitespace-pre-wrap">{message.display}</div>
+                 <div className="text-sm whitespace-pre-wrap">{typeof message.display === 'string' ? message.display : ''}</div>
               </div>
               {message.role === "user" && (
                 <Avatar className="h-8 w-8 border">

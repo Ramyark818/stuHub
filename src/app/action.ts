@@ -2,17 +2,16 @@
 
 import {
   createAI,
-  createStreamableUI,
-  createStreamableValue,
   getMutableAIState,
 } from 'ai/rsc';
 import { CoreMessage } from 'ai';
 import { assessTranscript } from '@/ai/flows/transcript-assessment';
 import { askAssistant } from '@/ai/flows/ai-student-assistant';
+import { ReactNode } from 'react';
 
 async function submit(formData: FormData): Promise<{
   id: number;
-  display: React.ReactNode;
+  display: ReactNode;
 }> {
   'use server';
   const aiState = getMutableAIState<typeof AI>();
@@ -26,19 +25,19 @@ async function submit(formData: FormData): Promise<{
   // Update AI state with new user message.
   aiState.update([...aiState.get(), userMessage]);
 
-  const streamable = createStreamableUI(<div>Typing...</div>);
-
   const reply = await askAssistant({ query: userMessage.content });
 
-  aiState.done([
-    ...aiState.get(),
-    { role: 'assistant', content: reply.answer },
-  ]);
-  streamable.done(<div>{reply.answer}</div>);
+  const assistantMessage = {
+    id: Date.now(),
+    role: 'assistant' as const,
+    content: reply.answer,
+  };
+
+  aiState.done([...aiState.get(), assistantMessage]);
 
   return {
-    id: Date.now(),
-    display: streamable.value,
+    id: assistantMessage.id,
+    display: reply.answer,
   };
 }
 
