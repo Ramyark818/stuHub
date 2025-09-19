@@ -1,4 +1,5 @@
 
+
 import {
   Card,
   CardContent,
@@ -16,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
-import { Star, Book, Clock, CheckCircle, XCircle, GraduationCap, Code, Heart, FileText as PublicationIcon, Linkedin, Github } from "lucide-react";
+import { Star, Book, Clock, CheckCircle, XCircle, GraduationCap, Code, Heart, FileText as PublicationIcon, Linkedin, Github, Award, Briefcase } from "lucide-react";
 
 const stats = [
     { title: "Overall GPA", value: "3.85", icon: <Star className="h-6 w-6 text-muted-foreground" /> },
@@ -40,7 +41,9 @@ const documents = [
     { name: "'The Future of AI in Higher Education', J. of EdTech", type: "Publication", status: "Approved", date: "2024-07-15" },
     { name: "Summer Internship at TechCorp", type: "Internship", status: "Approved", date: "2024-09-01" },
     { name: "Advanced React Course", type: "Course", status: "Approved", date: "2024-10-25" },
-    { name: "Hackathon Winner", type: "Achievement", status: "Approved", date: "2024-08-15" },
+    { name: "Hackathon Winner: Best Use of AI", type: "Achievement", status: "Approved", date: "2024-08-15" },
+    { name: "Dean's List 2023", type: "Achievement", status: "Approved", date: "2023-12-20" },
+    { name: "Community Food Bank Volunteer App", type: "Voluntary Project", status: "Approved", date: "2023-11-01" },
     { name: "Part-time work at Cafe", type: "Experience", status: "Rejected", date: "2024-07-20" },
     { name: "Minor in Economics", type: "Education", status: "Rejected", date: "2024-05-10" },
 ];
@@ -52,6 +55,8 @@ const interests = approvedDocuments.find(doc => doc.type === 'Interests')?.name.
 const linkedin = approvedDocuments.find(doc => doc.type === 'LinkedIn')?.name;
 const github = approvedDocuments.find(doc => doc.type === 'GitHub')?.name;
 const publications = approvedDocuments.filter(doc => doc.type === 'Publication');
+const achievements = approvedDocuments.filter(doc => doc.type === 'Achievement');
+const voluntaryProjects = approvedDocuments.filter(doc => doc.type === 'Voluntary Project');
 
 export default function StudentDashboard() {
   return (
@@ -113,6 +118,30 @@ export default function StudentDashboard() {
                     <CardContent>
                         <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
                             {publications.map(pub => <li key={pub.name}>{pub.name}</li>)}
+                        </ul>
+                    </CardContent>
+                </Card>
+            )}
+             {achievements.length > 0 && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><Award className="h-5 w-5" /> Achievements</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                            {achievements.map(ach => <li key={ach.name}>{ach.name}</li>)}
+                        </ul>
+                    </CardContent>
+                </Card>
+            )}
+            {voluntaryProjects.length > 0 && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><Briefcase className="h-5 w-5" /> Voluntary Projects</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                            {voluntaryProjects.map(proj => <li key={proj.name}>{proj.name}</li>)}
                         </ul>
                     </CardContent>
                 </Card>
