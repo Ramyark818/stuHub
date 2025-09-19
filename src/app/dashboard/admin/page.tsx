@@ -39,6 +39,7 @@ export default function AdminDashboard() {
   const [data, setData] = useState(initialData);
 
   useEffect(() => {
+    // This will only run on the client, after initial hydration
     setData(initialData.map(item => ({
       ...item,
       total: Math.floor(Math.random() * 5000) + 1000,

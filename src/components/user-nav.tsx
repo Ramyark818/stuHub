@@ -51,7 +51,7 @@ export function UserNav() {
       if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
         setRole(savedRole);
       } else {
-          setRole("student");
+          setRole("student"); // Default to student if no role is set or role is invalid
       }
     };
 

@@ -42,12 +42,13 @@ function NavSkeleton() {
           <Skeleton className="h-10 w-full" />
         </div>
         <Separator />
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-2 pt-2">
             <Skeleton className="h-8 w-full" />
             <Skeleton className="h-8 w-full" />
             <Skeleton className="h-8 w-full" />
         </div>
-        <div className="mt-auto space-y-2">
+        <Separator />
+        <div className="mt-auto">
           <Skeleton className="h-8 w-full" />
         </div>
       </nav>
