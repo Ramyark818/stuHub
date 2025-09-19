@@ -46,7 +46,7 @@ export function UserNav() {
   const [role, setRole] = useState<Role | null>(null);
   
   useEffect(() => {
-    const handleStorageChange = () => {
+    const handleRoleChange = () => {
       const savedRole = localStorage.getItem("userRole") as Role | null;
       if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
         setRole(savedRole);
@@ -55,13 +55,11 @@ export function UserNav() {
       }
     };
 
-    handleStorageChange();
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('userRoleChanged', handleStorageChange);
+    handleRoleChange(); // Initial role check
+    window.addEventListener('userRoleChanged', handleRoleChange); // Listen for custom event
     
     return () => {
-        window.removeEventListener('storage', handleStorageChange);
-        window.removeEventListener('userRoleChanged', handleStorageChange);
+        window.removeEventListener('userRoleChanged', handleRoleChange);
     };
   }, []);
 
