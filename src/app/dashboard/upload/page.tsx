@@ -1,8 +1,20 @@
+
+import dynamic from 'next/dynamic';
 import { PageHeader } from "@/components/page-header";
-import { UploadForm } from "@/components/upload-form";
-import { FacultyApprovalUploadForm } from "@/components/faculty-approval-upload-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from '@/components/ui/skeleton';
+
+const UploadForm = dynamic(() => import('@/components/upload-form').then(mod => mod.UploadForm), { 
+  ssr: false,
+  loading: () => <Skeleton className="h-48 w-full" />
+});
+
+const FacultyApprovalUploadForm = dynamic(() => import('@/components/faculty-approval-upload-form').then(mod => mod.FacultyApprovalUploadForm), { 
+  ssr: false,
+  loading: () => <Skeleton className="h-72 w-full" />
+});
+
 
 export default function UploadPage() {
   return (
