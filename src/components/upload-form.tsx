@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { assessTranscript } from "@/ai/flows/transcript-assessment";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, UploadCloud, FileText, Star, TrendingDown } from "lucide-react";
@@ -71,51 +71,43 @@ export function UploadForm() {
 
   return (
     <div className="grid gap-8 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Upload Transcript</CardTitle>
-          <CardDescription>Upload your academic transcript for AI-powered assessment.</CardDescription>
-        </CardHeader>
+      <div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent>
-              <FormField
-                control={form.control}
-                name="transcript"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Transcript File</FormLabel>
-                    <FormControl>
-                       <div className="relative">
-                        <UploadCloud className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                        <Input 
-                          type="file" 
-                          className="pl-10"
-                          accept=".pdf,.png,.jpg,.jpeg"
-                          onChange={(e) => field.onChange(e.target.files)} 
-                        />
-                       </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing...
-                  </>
-                ) : (
-                  "Assess Transcript"
-                )}
-              </Button>
-            </CardFooter>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="transcript"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Transcript File</FormLabel>
+                  <FormControl>
+                      <div className="relative">
+                      <UploadCloud className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input 
+                        type="file" 
+                        className="pl-10"
+                        accept=".pdf,.png,.jpg,.jpeg"
+                        onChange={(e) => field.onChange(e.target.files)} 
+                      />
+                      </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                "Assess Transcript"
+              )}
+            </Button>
           </form>
         </Form>
-      </Card>
+      </div>
       
       <Card>
         <CardHeader>
