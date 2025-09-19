@@ -51,6 +51,9 @@ export function DashboardNav() {
     setRole(newRole);
     localStorage.setItem("userRole", newRole);
 
+    // Dispatch a custom event to notify other components of the role change
+    window.dispatchEvent(new Event('userRoleChanged'));
+
     // Navigate to the default dashboard for the new role
     if (newRole === 'student') {
         router.push('/dashboard/student');
