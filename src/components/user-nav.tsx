@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -54,19 +55,13 @@ export function UserNav() {
       }
     };
 
-    // Set the initial role
     handleStorageChange();
-
-    // Listen for changes to localStorage
     window.addEventListener('storage', handleStorageChange);
-
-    // Custom event listener for when the role is changed within the same tab
-    const handleRoleChange = () => handleStorageChange();
-    window.addEventListener('userRoleChanged', handleRoleChange);
+    window.addEventListener('userRoleChanged', handleStorageChange);
     
     return () => {
         window.removeEventListener('storage', handleStorageChange);
-        window.removeEventListener('userRoleChanged', handleRoleChange);
+        window.removeEventListener('userRoleChanged', handleStorageChange);
     };
   }, []);
 

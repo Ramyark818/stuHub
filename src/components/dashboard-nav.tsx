@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -13,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Role = "student" | "faculty" | "admin";
 
@@ -65,7 +67,23 @@ export function DashboardNav() {
   };
 
   if (!role) {
-    return null; // Or a loading skeleton
+    return (
+      <nav className="flex flex-col h-full gap-4 p-4">
+        <div className="px-2">
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <Separator />
+        <div className="flex-1 space-y-2">
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+        </div>
+        <div className="mt-auto space-y-2">
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+        </div>
+      </nav>
+    );
   }
 
   return (

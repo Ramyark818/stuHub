@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -44,57 +45,70 @@ const profileData = {
     }
 }
 
+function ProfileSkeleton() {
+    return (
+        <>
+            <PageHeader title="My Profile" description="View and manage your personal information." />
+            <Card>
+                <CardHeader>
+                    <CardTitle>Profile Details</CardTitle>
+                    <CardDescription>Update your photo and personal details here.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="flex items-center gap-4">
+                        <Skeleton className="h-20 w-20 rounded-full" />
+                        <Skeleton className="h-10 w-28" />
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                         <div className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                         <div className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                         <div className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter>
+                     <Skeleton className="h-10 w-32" />
+                </CardFooter>
+            </Card>
+        </>
+    )
+}
+
 export default function ProfilePage() {
     const [role, setRole] = useState<Role | null>(null);
 
     useEffect(() => {
-        const savedRole = localStorage.getItem("userRole") as Role | null;
-        if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
-            setRole(savedRole);
-        } else {
-            setRole("student");
-        }
+        const handleRoleChange = () => {
+            const savedRole = localStorage.getItem("userRole") as Role | null;
+            if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
+                setRole(savedRole);
+            } else {
+                setRole("student"); // Default role
+            }
+        };
+
+        handleRoleChange(); // Initial role
+        window.addEventListener('userRoleChanged', handleRoleChange); // Listen for custom event
+
+        return () => {
+            window.removeEventListener('userRoleChanged', handleRoleChange);
+        };
     }, []);
 
     if (!role) {
-        return (
-             <>
-                <PageHeader title="My Profile" description="View and manage your personal information." />
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Profile Details</CardTitle>
-                        <CardDescription>Update your photo and personal details here.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="flex items-center gap-4">
-                            <Skeleton className="h-20 w-20 rounded-full" />
-                            <Skeleton className="h-10 w-28" />
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Skeleton className="h-4 w-20" />
-                                <Skeleton className="h-10 w-full" />
-                            </div>
-                             <div className="space-y-2">
-                                <Skeleton className="h-4 w-20" />
-                                <Skeleton className="h-10 w-full" />
-                            </div>
-                             <div className="space-y-2">
-                                <Skeleton className="h-4 w-20" />
-                                <Skeleton className="h-10 w-full" />
-                            </div>
-                             <div className="space-y-2">
-                                <Skeleton className="h-4 w-20" />
-                                <Skeleton className="h-10 w-full" />
-                            </div>
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                         <Skeleton className="h-10 w-32" />
-                    </CardFooter>
-                </Card>
-            </>
-        )
+        return <ProfileSkeleton />;
     }
 
     const userProfile = profileData[role];
