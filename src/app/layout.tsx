@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'UniTrack - Unified Academic Management',
+  title: 'StuHub - Unified Academic Management',
   description: 'A modern platform for students, faculty, and administrators.',
 };
 
