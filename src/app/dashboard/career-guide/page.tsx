@@ -25,6 +25,14 @@ const formSchema = z.object({
   interests: z.array(z.object({ value: z.string().min(1, "Interest cannot be empty") })).min(1, "Please enter at least one interest."),
 });
 
+function CareerChat() {
+    return (
+        <AI>
+            <ChatUI />
+        </AI>
+    )
+}
+
 export default function CareerGuidePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<CareerGuideOutput | null>(null);
@@ -210,9 +218,7 @@ export default function CareerGuidePage() {
                     <CardDescription>Ask our AI career counselor any questions you have about your future path.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col">
-                    <AI>
-                        <ChatUI />
-                    </AI>
+                    <CareerChat />
                 </CardContent>
             </Card>
         </TabsContent>
