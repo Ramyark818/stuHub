@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bot, FileUp, GraduationCap, LayoutDashboard, Settings, Shield, University, User, Users } from "lucide-react";
@@ -34,7 +34,11 @@ const adminNavItems = [
 
 export function DashboardNav() {
   const pathname = usePathname();
-  const [role, setRole] = useState<Role>("student");
+  const [role, setRole] = useState<Role | null>(null);
+
+  useEffect(() => {
+    setRole("student");
+  }, []);
 
   let navItems = studentNavItems;
   let dashboardPath = "/dashboard/student";
@@ -44,6 +48,10 @@ export function DashboardNav() {
   } else if (role === "admin") {
     navItems = [...studentNavItems, ...facultyNavItems]; // For demo, let admin see all
     dashboardPath = "/dashboard/admin";
+  }
+
+  if (!role) {
+    return null; // Or a loading skeleton
   }
 
   return (
