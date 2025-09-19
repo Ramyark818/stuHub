@@ -9,10 +9,7 @@ import { assessTranscript } from '@/ai/flows/transcript-assessment';
 import { askAssistant } from '@/ai/flows/ai-student-assistant';
 import { ReactNode } from 'react';
 
-async function submit(formData: FormData): Promise<{
-  id: number;
-  display: ReactNode;
-}> {
+async function submit(formData: FormData) {
   'use server';
   const aiState = getMutableAIState<typeof AI>();
 
@@ -36,8 +33,9 @@ async function submit(formData: FormData): Promise<{
   aiState.done([...aiState.get(), assistantMessage]);
 
   return {
-    id: assistantMessage.id,
-    display: reply.answer,
+    id: Date.now(),
+    role: 'assistant',
+    display: reply.answer
   };
 }
 
@@ -47,6 +45,7 @@ const initialAIState: CoreMessage[] = [];
 // Define the initial UI state of the application.
 const initialUIState: {
   id: number;
+  role: 'user' | 'assistant';
   display: React.ReactNode;
 }[] = [];
 
