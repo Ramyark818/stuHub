@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Bot, FileUp, LayoutDashboard, University, User, Users, Contact } from "lucide-react";
+import { Bot, FileUp, LayoutDashboard, University, User, Users, Contact, FileCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -27,6 +27,7 @@ const studentNavItems = [
 
 const facultyNavItems = [
   { href: "/dashboard/faculty", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/faculty/approvals", label: "Document Approvals", icon: FileCheck },
 ];
 
 const adminNavItems = [
