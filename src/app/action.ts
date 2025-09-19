@@ -7,6 +7,7 @@ import {
 import { CoreMessage } from 'ai';
 import { assessTranscript } from '@/ai/flows/transcript-assessment';
 import { askAssistant } from '@/ai/flows/ai-student-assistant';
+import { guideCareer } from '@/ai/flows/career-guide';
 import { ReactNode } from 'react';
 
 async function submit(formData: FormData) {
@@ -54,6 +55,7 @@ export const AI = createAI({
   actions: {
     submit,
     assessTranscript,
+    guideCareer,
   },
   initialUIState,
   initialAIState,
