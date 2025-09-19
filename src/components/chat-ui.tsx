@@ -12,7 +12,7 @@ import { useUIState, useActions } from "ai/rsc";
 
 export function ChatUI() {
   const [messages, setMessages] = useUIState<typeof AI>();
-  const { submit } = useActions();
+  const { submit } = useActions<typeof AI>();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -116,3 +116,5 @@ export function ChatUI() {
     </div>
   );
 }
+
+    

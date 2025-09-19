@@ -17,21 +17,19 @@ import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AI } from "@/app/action";
-import { ChatUI } from "@/components/chat-ui";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const ChatUI = dynamic(() => import('@/components/chat-ui').then(mod => mod.ChatUI), {
+  ssr: false,
+  loading: () => <Skeleton className="h-full w-full" />
+});
 
 
 const formSchema = z.object({
   skills: z.array(z.object({ value: z.string().min(1, "Skill cannot be empty") })).min(1, "Please enter at least one skill."),
   interests: z.array(z.object({ value: z.string().min(1, "Interest cannot be empty") })).min(1, "Please enter at least one interest."),
 });
-
-function CareerChat() {
-    return (
-        <AI>
-            <ChatUI />
-        </AI>
-    )
-}
 
 export default function CareerGuidePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -211,14 +209,16 @@ export default function CareerGuidePage() {
                 </div>
             </div>
         </TabsContent>
-        <TabsContent value="chat" className="flex-1 w-full mt-6 h-full">
-             <Card className="h-full flex flex-col">
+        <TabsContent value="chat" className="flex-1 w-full mt-6 flex flex-col">
+             <Card className="h-full flex-1 flex flex-col">
                 <CardHeader>
                     <CardTitle>AI Career Chat</CardTitle>
                     <CardDescription>Ask our AI career counselor any questions you have about your future path.</CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                    <CareerChat />
+                <CardContent className="flex-1 flex flex-col p-0">
+                    <AI>
+                        <ChatUI />
+                    </AI>
                 </CardContent>
             </Card>
         </TabsContent>
@@ -227,3 +227,5 @@ export default function CareerGuidePage() {
     </>
   );
 }
+
+    
