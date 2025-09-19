@@ -27,17 +27,17 @@ type Role = "student" | "faculty" | "admin";
 const userProfiles = {
     student: {
         name: "Demo Student",
-        email: "student@unitrack.com",
+        email: "student@stuhub.com",
         avatarId: "student-avatar",
     },
     faculty: {
         name: "Dr. Demo Faculty",
-        email: "faculty@unitrack.com",
+        email: "faculty@stuhub.com",
         avatarId: "faculty-avatar",
     },
     admin: {
         name: "Admin User",
-        email: "admin@unitrack.com",
+        email: "admin@stuhub.com",
         avatarId: "admin-avatar",
     }
 }
