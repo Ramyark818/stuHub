@@ -1,5 +1,3 @@
-'use server';
-
 // This file contains hardcoded data for the student dashboard and portfolio.
 // In a real application, this data would be fetched from a database.
 
