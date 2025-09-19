@@ -24,7 +24,7 @@ const formSchema = z.object({
     ),
 });
 
-export function UploadForm() {
+function UploadFormContent() {
   const [assessment, setAssessment] = useState<TranscriptAssessmentOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { assessTranscript } = AI.useActions();
@@ -166,4 +166,12 @@ export function UploadForm() {
       </Card>
     </div>
   );
+}
+
+export function UploadForm() {
+    return (
+        <AI>
+            <UploadFormContent />
+        </AI>
+    )
 }
