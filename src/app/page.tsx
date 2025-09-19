@@ -62,10 +62,10 @@ export default function LandingPage() {
           <div className="container px-4 text-center">
             <div className="max-w-3xl mx-auto space-y-4">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline">
-                Unified Academic Management, Simplified
+                Centralised Digital System for Student Activity
               </h1>
               <p className="text-lg text-muted-foreground">
-                UniTrack is the all-in-one platform for students, faculty, and administrators to streamline academic processes and enhance collaboration.
+                StuHu is the all-in-one platform for students, faculty, and administrators to streamline academic processes and enhance collaboration.
               </p>
               <div className="flex justify-center gap-4">
                 <Button size="lg" asChild>
