@@ -1,7 +1,8 @@
+
 "use client";
 
 import { PageHeader } from "@/components/page-header";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AI } from "@/app/action";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,9 +20,11 @@ export default function ChatPage() {
         description="Ask me anything about university resources, procedures, or general information."
       />
       <Card className="flex-1 flex flex-col">
-        <AI>
-          <ChatUI />
-        </AI>
+        <CardContent className="flex-1 flex flex-col p-0">
+          <AI>
+            <ChatUI />
+          </AI>
+        </CardContent>
       </Card>
     </div>
   );
