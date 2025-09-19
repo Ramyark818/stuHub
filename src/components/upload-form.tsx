@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AI } from '@/app/action';
+import { assessTranscript } from "@/ai/flows/transcript-assessment";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,7 +28,6 @@ const formSchema = z.object({
 export function UploadForm() {
   const [assessment, setAssessment] = useState<TranscriptAssessmentOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { assessTranscript } = AI.useActions();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
