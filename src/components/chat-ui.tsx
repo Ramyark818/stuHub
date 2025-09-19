@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useActions } from "ai/rsc/react";
+import { useActions, useUIState } from 'ai/rsc/react';
 import { type AI } from "@/app/action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,10 +16,10 @@ type Message = {
 };
 
 export function ChatUI() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useUIState<typeof AI>();
+  const { askAssistant } = useActions<typeof AI>();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { askAssistant } = useActions<typeof AI>();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export function ChatUI() {
     <div className="flex flex-col h-full">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="space-y-6">
-          {messages.map((message) => (
+          {messages.map((message: Message) => (
             <div
               key={message.id}
               className={`flex items-start gap-4 ${
