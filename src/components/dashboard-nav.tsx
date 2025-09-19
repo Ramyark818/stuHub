@@ -145,9 +145,8 @@ export function DashboardNav() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-                pathname.startsWith(item.href) && pathname !== '/dashboard/admin' ? "bg-accent text-primary" : pathname === item.href ? "bg-accent text-primary" : "",
-                item.href === '/dashboard/admin' && pathname === '/dashboard/admin' && "bg-accent text-primary"
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                  pathname === item.href && "bg-accent text-primary"
                 )}
             >
                 <item.icon className="h-4 w-4" />
