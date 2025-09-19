@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot, User, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-function ChatContent() {
+export function ChatUI() {
   const [messages, setMessages] = AI.useUIState();
   const { submit } = AI.useActions();
   const [input, setInput] = useState("");
@@ -113,12 +113,4 @@ function ChatContent() {
       </div>
     </div>
   );
-}
-
-export function ChatUI() {
-    return (
-        <AI>
-            <ChatContent />
-        </AI>
-    )
 }
