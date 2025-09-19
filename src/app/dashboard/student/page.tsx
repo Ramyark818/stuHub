@@ -31,12 +31,14 @@ const deadlines = [
     { course: "EN 101: Academic Writing", task: "Final Essay Draft", due: "2024-11-10", status: "Past Due" },
 ];
 
-const certificates = [
-    { name: "Advanced React", status: "Approved", date: "2024-10-25" },
-    { name: "Introduction to AI", status: "Approved", date: "2024-09-15" },
-    { name: "Creative Writing Workshop", status: "Rejected", date: "2024-08-01" },
-    { name: "Data Science Fundamentals", status: "Approved", date: "2024-07-12" },
+const documents = [
+    { name: "Summer Internship at TechCorp", type: "Internship", status: "Approved", date: "2024-09-01" },
+    { name: "Advanced React Course", type: "Course", status: "Approved", date: "2024-10-25" },
+    { name: "Hackathon Winner", type: "Achievement", status: "Approved", date: "2024-08-15" },
+    { name: "Part-time work at Cafe", type: "Experience", status: "Rejected", date: "2024-07-20" },
+    { name: "Volunteer at Animal Shelter", type: "Other", status: "Approved", date: "2024-06-05" },
 ];
+
 
 export default function StudentDashboard() {
   return (
@@ -91,29 +93,33 @@ export default function StudentDashboard() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Certificate Status</CardTitle>
+            <CardTitle>Document Status</CardTitle>
             <CardDescription>
-              A summary of your submitted certificates.
+              A summary of your submitted documents for experience, internships, courses, and achievements.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Certificate Name</TableHead>
+                  <TableHead>Document Name</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead className="text-right">Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {certificates.map((cert, index) => (
+                {documents.map((doc, index) => (
                   <TableRow key={index}>
-                    <TableCell className="font-medium">{cert.name}</TableCell>
-                    <TableCell>{cert.date}</TableCell>
+                    <TableCell className="font-medium">{doc.name}</TableCell>
+                    <TableCell>
+                        <Badge variant="outline">{doc.type}</Badge>
+                    </TableCell>
+                    <TableCell>{doc.date}</TableCell>
                     <TableCell className="text-right">
-                      <Badge variant={cert.status === 'Approved' ? 'default' : 'destructive'} className="flex items-center gap-1.5 w-fit ml-auto">
-                        {cert.status === 'Approved' ? <CheckCircle className="h-3.5 w-3.5" /> : <XCircle className="h-3.5 w-3.5" />}
-                        {cert.status}
+                      <Badge variant={doc.status === 'Approved' ? 'default' : 'destructive'} className="flex items-center gap-1.5 w-fit ml-auto">
+                        {doc.status === 'Approved' ? <CheckCircle className="h-3.5 w-3.5" /> : <XCircle className="h-3.5 w-3.5" />}
+                        {doc.status}
                       </Badge>
                     </TableCell>
                   </TableRow>
