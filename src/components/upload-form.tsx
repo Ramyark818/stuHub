@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useActions } from 'ai/rsc';
+import { useActions } from 'ai/react';
 import { type AI } from '@/app/action';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

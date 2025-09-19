@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useActions } from "ai/rsc";
+import { useActions } from "ai/react";
 import { type AI } from "@/app/action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
