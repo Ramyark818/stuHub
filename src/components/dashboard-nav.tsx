@@ -109,19 +109,32 @@ export function DashboardNav() {
       <Separator />
 
       <div className="flex-1 space-y-2">
-        {role === "student" && studentNavItems.map((item) => (
+        {role === "student" && (
+          <>
+          {studentNavItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                pathname === item.href && "bg-accent text-primary"
+              )}
+            >
+              <item.icon className="h-4 w-4" />
+              {item.label}
+            </Link>
+          ))}
           <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-              pathname === item.href && "bg-accent text-primary"
+            href="/dashboard/career-guide"
+            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+              pathname === '/dashboard/career-guide' && 'bg-accent text-primary'
             )}
           >
-            <item.icon className="h-4 w-4" />
-            {item.label}
+            <Bot className="h-4 w-4" />
+            Career Guide
           </Link>
-        ))}
+          </>
+        )}
 
         {role === "faculty" && facultyNavItems.map((item) => (
           <Link
