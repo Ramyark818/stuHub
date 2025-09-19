@@ -16,6 +16,7 @@ import { PageHeader } from "@/components/page-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { User } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Role = "student" | "faculty" | "admin";
 
@@ -44,14 +45,57 @@ const profileData = {
 }
 
 export default function ProfilePage() {
-    const [role, setRole] = useState<Role>("student");
+    const [role, setRole] = useState<Role | null>(null);
 
     useEffect(() => {
         const savedRole = localStorage.getItem("userRole") as Role | null;
         if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
             setRole(savedRole);
+        } else {
+            setRole("student");
         }
     }, []);
+
+    if (!role) {
+        return (
+             <>
+                <PageHeader title="My Profile" description="View and manage your personal information." />
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Profile Details</CardTitle>
+                        <CardDescription>Update your photo and personal details here.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <Skeleton className="h-20 w-20 rounded-full" />
+                            <Skeleton className="h-10 w-28" />
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Skeleton className="h-4 w-20" />
+                                <Skeleton className="h-10 w-full" />
+                            </div>
+                             <div className="space-y-2">
+                                <Skeleton className="h-4 w-20" />
+                                <Skeleton className="h-10 w-full" />
+                            </div>
+                             <div className="space-y-2">
+                                <Skeleton className="h-4 w-20" />
+                                <Skeleton className="h-10 w-full" />
+                            </div>
+                             <div className="space-y-2">
+                                <Skeleton className="h-4 w-20" />
+                                <Skeleton className="h-10 w-full" />
+                            </div>
+                        </div>
+                    </CardContent>
+                    <CardFooter>
+                         <Skeleton className="h-10 w-32" />
+                    </CardFooter>
+                </Card>
+            </>
+        )
+    }
 
     const userProfile = profileData[role];
     const userAvatar = PlaceHolderImages.find(p => p.id === userProfile.avatarId);

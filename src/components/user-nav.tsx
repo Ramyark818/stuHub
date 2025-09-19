@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Role = "student" | "faculty" | "admin";
 
@@ -41,14 +42,20 @@ const userProfiles = {
 }
 
 export function UserNav() {
-  const [role, setRole] = useState<Role>("student");
+  const [role, setRole] = useState<Role | null>(null);
   
   useEffect(() => {
     const savedRole = localStorage.getItem("userRole") as Role | null;
     if (savedRole && ["student", "faculty", "admin"].includes(savedRole)) {
       setRole(savedRole);
+    } else {
+        setRole("student");
     }
   }, []);
+
+  if (!role) {
+    return <Skeleton className="h-9 w-9 rounded-full" />;
+  }
 
   const profile = userProfiles[role];
   const userAvatar = PlaceHolderImages.find(p => p.id === profile.avatarId);
