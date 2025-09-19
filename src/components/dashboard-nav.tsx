@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Bot, FileUp, LayoutDashboard, Settings, University, User, Users } from "lucide-react";
+import { Bot, FileUp, LayoutDashboard, Settings, University, User, Users, Contact } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -20,6 +20,7 @@ type Role = "student" | "faculty" | "admin";
 
 const studentNavItems = [
   { href: "/dashboard/student", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/portfolio", label: "Portfolio", icon: Contact },
   { href: "/dashboard/upload", label: "Upload Records", icon: FileUp },
   { href: "/dashboard/chat", label: "AI Assistant", icon: Bot },
 ];
