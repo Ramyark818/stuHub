@@ -81,7 +81,6 @@ export function DashboardNav() {
         </div>
         <div className="mt-auto space-y-2">
           <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
         </div>
       </nav>
     );
