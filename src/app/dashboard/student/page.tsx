@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/table";
 import { PageHeader } from "@/components/page-header";
 import { Badge } from "@/components/ui/badge";
-import { Star, Book, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Star, Book, Clock, CheckCircle, XCircle, GraduationCap, Code, Heart, FileText as PublicationIcon, Linkedin, Github } from "lucide-react";
 
 const stats = [
     { title: "Overall GPA", value: "3.85", icon: <Star className="h-6 w-6 text-muted-foreground" /> },
@@ -32,13 +32,26 @@ const deadlines = [
 ];
 
 const documents = [
+    { name: "Bachelor of Science in Computer Science", type: "Education", status: "Approved", date: "2024-05-10" },
+    { name: "React, Next.js, TypeScript, Node.js", type: "Skills", status: "Approved", date: "2024-10-01" },
+    { name: "AI in Education, Hiking, Chess", type: "Interests", status: "Approved", date: "2024-10-01" },
+    { name: "linkedin.com/in/demostudent", type: "LinkedIn", status: "Approved", date: "2024-10-01" },
+    { name: "github.com/demostudent", type: "GitHub", status: "Approved", date: "2024-10-01" },
+    { name: "'The Future of AI in Higher Education', J. of EdTech", type: "Publication", status: "Approved", date: "2024-07-15" },
     { name: "Summer Internship at TechCorp", type: "Internship", status: "Approved", date: "2024-09-01" },
     { name: "Advanced React Course", type: "Course", status: "Approved", date: "2024-10-25" },
     { name: "Hackathon Winner", type: "Achievement", status: "Approved", date: "2024-08-15" },
     { name: "Part-time work at Cafe", type: "Experience", status: "Rejected", date: "2024-07-20" },
-    { name: "Volunteer at Animal Shelter", type: "Other", status: "Approved", date: "2024-06-05" },
+    { name: "Minor in Economics", type: "Education", status: "Rejected", date: "2024-05-10" },
 ];
 
+const approvedDocuments = documents.filter(doc => doc.status === 'Approved');
+const education = approvedDocuments.find(doc => doc.type === 'Education')?.name;
+const skills = approvedDocuments.find(doc => doc.type === 'Skills')?.name.split(', ');
+const interests = approvedDocuments.find(doc => doc.type === 'Interests')?.name.split(', ');
+const linkedin = approvedDocuments.find(doc => doc.type === 'LinkedIn')?.name;
+const github = approvedDocuments.find(doc => doc.type === 'GitHub')?.name;
+const publications = approvedDocuments.filter(doc => doc.type === 'Publication');
 
 export default function StudentDashboard() {
   return (
@@ -58,39 +71,109 @@ export default function StudentDashboard() {
             </Card>
         ))}
       </div>
-      <div className="mt-6 grid gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Upcoming Deadlines</CardTitle>
-            <CardDescription>
-              Manage your tasks and stay on top of your coursework.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Course</TableHead>
-                  <TableHead>Task</TableHead>
-                  <TableHead>Due Date</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {deadlines.map((deadline, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">{deadline.course}</TableCell>
-                    <TableCell>{deadline.task}</TableCell>
-                    <TableCell>{deadline.due}</TableCell>
-                    <TableCell>
-                      <Badge variant={deadline.status === 'Upcoming' ? 'default' : 'destructive'}>{deadline.status}</Badge>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 grid gap-6">
+            {education && (
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><GraduationCap className="h-5 w-5" /> Education</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">{education}</p>
+                    </CardContent>
+                </Card>
+            )}
+            <div className="grid md:grid-cols-2 gap-6">
+                 {skills && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2"><Code className="h-5 w-5" /> Skills</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-wrap gap-2">
+                            {skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                        </CardContent>
+                    </Card>
+                )}
+                {interests && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2"><Heart className="h-5 w-5" /> Interests</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-wrap gap-2">
+                             {interests.map(interest => <Badge key={interest} variant="outline">{interest}</Badge>)}
+                        </CardContent>
+                    </Card>
+                )}
+            </div>
+             {publications.length > 0 && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><PublicationIcon className="h-5 w-5" /> Publications</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                            {publications.map(pub => <li key={pub.name}>{pub.name}</li>)}
+                        </ul>
+                    </CardContent>
+                </Card>
+            )}
+        </div>
+        <div className="lg:col-span-1 grid gap-6">
+            {(github || linkedin) && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Professional Links</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        {linkedin && (
+                            <a href={`https://${linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline">
+                                <Linkedin className="h-5 w-5 text-muted-foreground" />
+                                <span>{linkedin}</span>
+                            </a>
+                        )}
+                        {github && (
+                            <a href={`https://${github}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline">
+                                <Github className="h-5 w-5 text-muted-foreground" />
+                                <span>{github}</span>
+                            </a>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
+             <Card>
+                <CardHeader>
+                    <CardTitle>Upcoming Deadlines</CardTitle>
+                    <CardDescription>
+                    Manage your tasks and stay on top of your coursework.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead>Task</TableHead>
+                        <TableHead>Due</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {deadlines.map((deadline, index) => (
+                        <TableRow key={index}>
+                            <TableCell>
+                                <div className="font-medium">{deadline.task}</div>
+                                <div className="text-xs text-muted-foreground">{deadline.course}</div>
+                            </TableCell>
+                            <TableCell>
+                                <Badge variant={deadline.status === 'Upcoming' ? 'default' : 'destructive'}>{deadline.due}</Badge>
+                            </TableCell>
+                        </TableRow>
+                        ))}
+                    </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+        </div>
+      </div>
+       <div className="mt-6">
         <Card>
           <CardHeader>
             <CardTitle>Document Status</CardTitle>
