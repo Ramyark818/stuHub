@@ -8,11 +8,11 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot, User, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useUIState } from "ai/rsc";
+import { useUIState, useActions } from "ai/rsc";
 
 export function ChatUI() {
   const [messages, setMessages] = useUIState<typeof AI>();
-  const { submit } = AI.useActions();
+  const { submit } = useActions();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
