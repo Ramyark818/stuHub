@@ -22,7 +22,6 @@ const studentNavItems = [
   { href: "/dashboard/student", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/portfolio", label: "Portfolio", icon: Contact },
   { href: "/dashboard/upload", label: "Upload Records", icon: FileUp },
-  { href: "/dashboard/career-guide", label: "Career Guide", icon: Wand2 },
 ];
 
 const facultyNavItems = [
