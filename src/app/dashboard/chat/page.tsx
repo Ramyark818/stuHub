@@ -1,7 +1,15 @@
+"use client";
+
 import { PageHeader } from "@/components/page-header";
-import { ChatUI } from "@/components/chat-ui";
 import { Card } from "@/components/ui/card";
 import { AI } from "@/app/action";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const ChatUI = dynamic(() => import('@/components/chat-ui').then(mod => mod.ChatUI), {
+  ssr: false,
+  loading: () => <Skeleton className="h-full w-full" />
+});
 
 export default function ChatPage() {
   return (
