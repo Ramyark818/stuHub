@@ -65,7 +65,7 @@ export default function LandingPage() {
                 Centralised Digital System for Student Activity
               </h1>
               <p className="text-lg text-muted-foreground">
-                StuHu is the all-in-one platform for students, faculty, and administrators to streamline academic processes and enhance collaboration.
+                StuHub is the all-in-one platform for students, faculty, and administrators to streamline academic processes and enhance collaboration.
               </p>
               <div className="flex justify-center gap-4">
                 <Button size="lg" asChild>
@@ -108,7 +108,7 @@ export default function LandingPage() {
             <Logo />
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} UniTrack. All rights reserved.
+            © {new Date().getFullYear()} StuHub. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/verify-certificate" className="text-sm hover:underline">Verify Certificate</Link>
