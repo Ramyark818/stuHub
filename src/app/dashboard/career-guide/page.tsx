@@ -2,7 +2,7 @@
 "use client";
 
 import { PageHeader } from "@/components/page-header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AI } from "@/app/action";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
